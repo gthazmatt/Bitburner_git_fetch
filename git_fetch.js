@@ -20,15 +20,17 @@ export async function main(ns) {
 	for (let i in filesToDownload) {
 		let filename = filesToDownload[i];
 		try {
-			await getFileFromGH(ns, config, filename);
-			ns.tprint(`Installed: ${filename} [${Number(i)+1}/${filesToDownload.length}]`);
+			var success = await getFileFromGH(ns, config, filename);
+			if(success) {
+				ns.tprint(`Installed: ${filename} [${Number(i)+1}/${filesToDownload.length}]`);
+			} else {
+				ns.tprintf("Failed to download %s", filename);
+			}
 		} catch (e) {
 			ns.tprint(`ERROR: tried to download ${filename}: `, e.message);
 			throw e;
 		}
 	}
-
-	ns.tprint("Install complete!");
 }
 
 async function readConfig(ns) {
@@ -56,5 +58,5 @@ async function getFileFromGH(ns, config, filename) {
 		filename
 	].join("/");
 	ns.print("Request to: "+url);
-	await ns.wget(url, filepath)
+	return await ns.wget(url, filepath)
 }
