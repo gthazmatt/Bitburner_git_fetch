@@ -10,6 +10,10 @@ export async function main(ns) {
 		throw new Error('Run the script from home');
 	}
 
+	if(ns.args.length > 0) {
+		configFileName = ns.args[0];
+	}
+
 	if(prefixDirectory){
 		if(!prefixDirectory.endsWith('/')) prefixDirectory += '/';
 		if(prefixDirectory[0] !== '/') prefixDirectory = '/' + prefixDirectory;
