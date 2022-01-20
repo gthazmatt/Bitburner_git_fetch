@@ -45,10 +45,11 @@ async function readConfig(ns) {
 
 async function getFileFromGH(ns, config, filename) {
 	let filepath = prefixDirectory + filename;
-
-	await ns.scriptKill(filepath, 'home')
-	await ns.rm(filepath)
-	await ns.sleep(20)
+	if(ns.fileExists(filepath)) {
+		ns.scriptKill(filepath, 'home')
+		ns.rm(filepath)
+		await ns.sleep(20)
+	}
 	
 	let url = [
 		config.baseURL,
