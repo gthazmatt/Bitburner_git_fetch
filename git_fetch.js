@@ -17,8 +17,7 @@ export async function main(ns) {
 
 	let config = await readConfig(ns);
 	let filesToDownload = config.filesToDownload;
-	for (let i in filesToDownload) {
-		let filename = filesToDownload[i];
+	for (let filename of filesToDownload) {
 		try {
 			var success = await getFileFromGH(ns, config, filename);
 			if(success) {
