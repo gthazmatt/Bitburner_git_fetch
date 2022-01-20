@@ -13,17 +13,17 @@ let baseURL = 'https://raw.githubusercontent.com/';
 let branch = 'main';
 
 export async function main(ns) {
-	let { filesToDownload } = await fetchConfig(ns);
-
 	if (ns.getHostname() !== 'home') {
 		throw new Error('Run the script from home');
 	}
-	
+
 	if(prefixDirectory){
 		if(!prefixDirectory.endsWith('/')) prefixDirectory += '/';
 		if(prefixDirectory[0] !== '/') prefixDirectory = '/' + prefixDirectory;
 	}
 
+	let config = await readConfig(ns);
+	let filesToDownload = config.filesToDownload;
 	for (let i in filesToDownload) {
 		let filename = filesToDownload[i];
 		try {
@@ -38,7 +38,7 @@ export async function main(ns) {
 	ns.tprint("Install complete!");
 }
 
-async function fetchConfig(ns) {
+async function readConfig(ns) {
 	try {
 		let json = ns.read(configFileName);
 		return JSON.parse(json);
