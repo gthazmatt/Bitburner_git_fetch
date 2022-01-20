@@ -1,8 +1,8 @@
 {
-    "baseURL" : "https://raw.githubusercontent.com",
-    "owner" : "git-username-here",
-    "repo" : "my-repo-name",
-    "branch" : "main",
+	"baseURL" : "https://raw.githubusercontent.com",
+	"owner" : "git-username-here",
+	"repo" : "my-repo-name",
+	"branch" : "main",
 	"filesToDownload": [
 		"my_script.js",
 		"test/my_script2.js"
