@@ -55,12 +55,7 @@ async function getFileFromGH(ns, filepath) {
 	await ns.rm(saveFilepath)
 	await ns.sleep(20)
 	
-	await githubReq(ns, filepath, saveFilepath);
-}
-
-async function githubReq(ns, filepath, saveFilepath) {
 	let url = baseURL + owner + "/" + repo + "/" + branch + "/" + filepath;
-	
 	ns.print("Request to: "+url);
 	await ns.wget(url, saveFilepath)
 }
