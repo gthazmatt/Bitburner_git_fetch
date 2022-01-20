@@ -1,16 +1,9 @@
 // from https://github.com/lethern/Bitburner_git_fetch
 
-// if your github is https://github.com/Bob/Bitburner_lib, owner is Bob and repo is Bitburner_lib
-let owner = "git-username-here";
-let repo = "my-repo-name";
-
 // if you want your files to be saved nested in a directory, type it here. Or leave it empty
 let prefixDirectory = '';
 
-// probably no changes here
-let configFileName = 'git_fetch.txt';
-let baseURL = 'https://raw.githubusercontent.com/';
-let branch = 'main';
+let configFileName = 'git_config.txt';
 
 export async function main(ns) {
 	if (ns.getHostname() !== 'home') {
@@ -27,7 +20,7 @@ export async function main(ns) {
 	for (let i in filesToDownload) {
 		let filename = filesToDownload[i];
 		try {
-			await getFileFromGH(ns, filename);
+			await getFileFromGH(ns, config, filename);
 			ns.tprint(`Installed: ${filename} [${Number(i)+1}/${filesToDownload.length}]`);
 		} catch (e) {
 			ns.tprint(`ERROR: tried to download ${filename}: `, e.message);
@@ -48,14 +41,20 @@ async function readConfig(ns) {
 	}
 }
 
-async function getFileFromGH(ns, filename) {
+async function getFileFromGH(ns, config, filename) {
 	let filepath = prefixDirectory + filename;
 
 	await ns.scriptKill(filepath, 'home')
 	await ns.rm(filepath)
 	await ns.sleep(20)
 	
-	let url = baseURL + owner + "/" + repo + "/" + branch + "/" + filename;
+	let url = [
+		config.baseURL,
+		config.owner,
+		config.repo,
+		config.branch,
+		filename
+	].join("/");
 	ns.print("Request to: "+url);
 	await ns.wget(url, filepath)
 }

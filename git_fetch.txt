@@ -1,6 +1,0 @@
-{
-	"filesToDownload": [
-		"my_script.js",
-		"test/my_script2.js"
-	]
-}
