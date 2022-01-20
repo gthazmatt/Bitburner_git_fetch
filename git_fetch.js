@@ -40,7 +40,6 @@ export async function main(ns) {
 
 async function fetchConfig(ns) {
 	try {
-		await getFileFromGH(ns, configFileName);
 		let json = ns.read(configFileName);
 		return JSON.parse(json);
 	}catch(e){
