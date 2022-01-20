@@ -48,14 +48,14 @@ async function readConfig(ns) {
 	}
 }
 
-async function getFileFromGH(ns, filepath) {
-	let saveFilepath = prefixDirectory + filepath;
-	
-	await ns.scriptKill(saveFilepath, 'home')
-	await ns.rm(saveFilepath)
+async function getFileFromGH(ns, filename) {
+	let filepath = prefixDirectory + filename;
+
+	await ns.scriptKill(filepath, 'home')
+	await ns.rm(filepath)
 	await ns.sleep(20)
 	
-	let url = baseURL + owner + "/" + repo + "/" + branch + "/" + filepath;
+	let url = baseURL + owner + "/" + repo + "/" + branch + "/" + filename;
 	ns.print("Request to: "+url);
-	await ns.wget(url, saveFilepath)
+	await ns.wget(url, filepath)
 }
